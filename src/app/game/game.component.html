@@ -1,0 +1,65 @@
+<!-- 
+  Form to take input from user
+ -->
+
+<div class="form-container">
+  <div class="form-group">
+    <p for="noOfSimulations">Enter the number of simulations</p>
+    <input
+      type="number"
+      class="form-control"
+      id="noOfSimulations"
+      name="noOfSimulations"
+      [(ngModel)]="noOfSimulations"
+    />
+  </div>
+  <div class="form-group">
+    <p for="isChangeDoor">Do you want to change the door?</p>
+    <select
+      class="form-control"
+      id="isChangeDoor"
+      name="isChangeDoor"
+      [(ngModel)]="isChangeDoor"
+    >
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+    </select>
+  </div>
+  <button class="form-submit" type="submit" (click)="onStart()">
+    Start Simulation
+  </button>
+</div>
+
+<!-- 
+  Displaying the result
+ -->
+<p class="display-result">
+  {{ wins }} out of {{ noOfSimulations }} simulations won.
+</p>
+
+<!-- 
+  Simulating the Monty Hall Problem
+ -->
+
+<div class="flex-container">
+  <div *ngFor="let image of doors; let i = index">
+    <div *ngIf="image.selected; else notSelected" class="flex-box-selected">
+      <div *ngIf="image.opened; else notOpened">
+        <img [src]="image.imageURL" class="img-display-opened" />
+      </div>
+      <ng-template #notOpened>
+        <img [src]="image.imageURL" class="img-display" />
+      </ng-template>
+    </div>
+    <ng-template #notSelected>
+      <div class="flex-box">
+        <div *ngIf="image.opened; else notOpened">
+          <img [src]="image.imageURL" class="img-display-opened" />
+        </div>
+        <ng-template #notOpened>
+          <img [src]="image.imageURL" class="img-display" />
+        </ng-template>
+      </div>
+    </ng-template>
+  </div>
+</div>
